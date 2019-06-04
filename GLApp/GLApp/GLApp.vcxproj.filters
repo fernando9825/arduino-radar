@@ -21,9 +21,15 @@
     <ClCompile Include="SerialPort\SerialPort.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GL_DrawingFuncs\GL_DrawingFuncs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SerialPort\SerialPort.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GL_DrawingFuncs\GL_DrawingFuncs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

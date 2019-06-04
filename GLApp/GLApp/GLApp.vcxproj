@@ -123,10 +123,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GL_DrawingFuncs\GL_DrawingFuncs.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SerialPort\SerialPort.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GL_DrawingFuncs\GL_DrawingFuncs.h" />
     <ClInclude Include="SerialPort\SerialPort.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
