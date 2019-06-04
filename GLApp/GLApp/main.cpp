@@ -4,6 +4,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "SerialPort/SerialPort.h"
+#include "SOIL2/SOIL2.h"
 
 const GLint WIDTH = 600, HEIGHT = 600;
 
@@ -13,6 +14,21 @@ int get_int(int, std::string prompt);
 int main() {
 	// set spanish
 	setlocale(LC_ALL, "Spanish");
+
+	/* load an image file directly as a new OpenGL texture */
+	GLuint tex_2d = SOIL_load_OGL_texture
+	(
+		"img.png",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+	);
+
+	/* check for an error during the load process */
+	if (0 == tex_2d)
+	{
+		printf("SOIL loading error: '%s'\n", SOIL_last_result());
+	}
 
 	// connect to arduino
 	int port = get_int(0, "\n¿Cúal es el puerto en el que está conectado el arduino? ");
