@@ -17,7 +17,7 @@ void display(SerialPort &arduino);
 int get_int(int, std::string prompt);
 const vector<string> explode(const string& s, const char& c);
 
-int grados = 0;
+float grados = 0;
 bool giroCompleto = false;
 
 char datos[MAX_LONGINTUD_DATOS];
@@ -142,8 +142,8 @@ void display(SerialPort &arduino) {
 	long int contador = 0;
 
 	//para los datos
-	long int gradosArduino = 0;
-	long int distancia = 0;
+	int gradosArduino = 0;
+	int distancia = 0;
 
 	vector<string> v{ explode(datos, ' ') };
 	for (auto n : v) {
@@ -163,21 +163,60 @@ void display(SerialPort &arduino) {
 					//cout << "DISTANCIA: " << c << endl;
 					string dis = c;
 					distancia = stoi(dis);
-				}
-				
+				}	
 			}
-
 		}
+
+		cout << "grados = " << gradosArduino << endl;
+		cout << "distancia = " << distancia << endl;
+
+		int x = distancia * cos(gradosArduino);
+		int y = distancia * sin(gradosArduino);
 	}
 
-	cout << "grados = " << gradosArduino << endl;
-	cout << "distancia = " << distancia << endl;
-
-
-	int x = distancia * cos(gradosArduino);
-	int y = (distancia * sin(gradosArduino)) - 5;
-	solidCircle2d(x, y, 0.5, 10000, 0, 360, new GLfloat[3]{ 1.0f, 0.0f, 0.0f });
-
+	if (distancia > 15) {
+		if (giroCompleto == false) {
+			LineDegrees2d(0, -5.0, 10.0, gradosArduino, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 1.0f });
+			LineDegrees2d(0, -5.0, 10.0, gradosArduino + 1, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 1.0f });
+			LineDegrees2d(0, -5.0, 10.0, gradosArduino, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 0.9f });
+			LineDegrees2d(0, -5.0, 10.0, gradosArduino - 1, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 0.8f });
+			LineDegrees2d(0, -5.0, 10.0, gradosArduino - 2, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 0.7f });
+			LineDegrees2d(0, -5.0, 10.0, gradosArduino - 3, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 0.6f });
+			LineDegrees2d(0, -5.0, 10.0, gradosArduino - 4, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 0.5f });
+			LineDegrees2d(0, -5.0, 10.0, gradosArduino - 5, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 0.4f });
+		}
+		if(giroCompleto == true){
+			LineDegrees2d(0, -5.0, 10.0, gradosArduino, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 1.0f });
+			LineDegrees2d(0, -5.0, 10.0, gradosArduino - 1, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 1.0f });
+			LineDegrees2d(0, -5.0, 10.0, gradosArduino, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 0.9f });
+			LineDegrees2d(0, -5.0, 10.0, gradosArduino + 1, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 0.8f });
+			LineDegrees2d(0, -5.0, 10.0, gradosArduino + 2, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 0.7f });
+			LineDegrees2d(0, -5.0, 10.0, gradosArduino + 3, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 0.6f });
+			LineDegrees2d(0, -5.0, 10.0, gradosArduino + 4, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 0.5f });
+			LineDegrees2d(0, -5.0, 10.0, gradosArduino + 5, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 0.4f });
+		}
+	}
+	else
+	{
+		if (giroCompleto == false) {
+			LineDegrees2d(0, -5.0, distancia, gradosArduino, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 1.0f });
+			LineDegrees2d(0, -5.0, distancia, gradosArduino, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 0.9f });
+			LineDegrees2d(0, -5.0, distancia, gradosArduino - 2, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 0.8f });
+			LineDegrees2d(0, -5.0, distancia, gradosArduino - 4, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 0.7f });
+			LineDegrees2d(0, -5.0, distancia, gradosArduino - 6, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 0.6f });
+			LineDegrees2d(0, -5.0, distancia, gradosArduino - 8, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 0.5f });
+			LineDegrees2d(0, -5.0, distancia, gradosArduino - 10, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 0.4f });
+		}
+		if (giroCompleto == true) {
+			LineDegrees2d(0, -5.0, distancia, gradosArduino, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 1.0f });
+			LineDegrees2d(0, -5.0, distancia, gradosArduino, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 0.9f });
+			LineDegrees2d(0, -5.0, distancia, gradosArduino + 2, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 0.8f });
+			LineDegrees2d(0, -5.0, distancia, gradosArduino + 4, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 0.7f });
+			LineDegrees2d(0, -5.0, distancia, gradosArduino + 6, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 0.6f });
+			LineDegrees2d(0, -5.0, distancia, gradosArduino + 8, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 0.5f });
+			LineDegrees2d(0, -5.0, distancia, gradosArduino + 10, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 0.4f });
+		}
+	}
 	//LineDegrees2d(x, y, 8, 0, new GLfloat[4]{ 1.0f, 0.0f, 0.0f, 1.0});
 
 	
@@ -193,26 +232,21 @@ void display(SerialPort &arduino) {
 	// white circle
 	solidCircle2d(0, -5.0, 0.2, 10000, 0, 360, new GLfloat[3]{ 1.0f, 1.0f, 1.0f });
 
-	LineDegrees2d(0, -5.0, 10.0, grados, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 0.4f });
+	//LineDegrees2d(0, -5.0, 10.0, grados, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 1.0f });
 
-	if (grados <= 180 && !giroCompleto) {
+	if (grados <= 165 && !giroCompleto) {
 		grados++;
 		
-		if (grados == 180) {
+		if (grados == 165) {
 			giroCompleto = !giroCompleto;
 		}
-	}
-		
-	else {
+	}else {
 		grados--;
 
-		if (grados == 0) {
+		if (grados == 15) {
 			giroCompleto = !giroCompleto;
 		}
 	}
-		
-	
-	//LineDegrees2d(0, -5.0, 10.0, 45, new GLfloat[3]{ 1.0f, 1.0f, 1.0f });
 }
 
 const vector<string> explode(const string& s, const char& c)
