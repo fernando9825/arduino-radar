@@ -16,11 +16,11 @@ inline string getCurrentDateTime(string s) {
 		strftime(buf, sizeof(buf), "%Y-%m-%d", &tstruct);
 	return string(buf);
 };
-inline void Logger(int dis, int angulo) {
+inline void Logger(int dis, int angulo, string ruta) {
 
-	string filePath = "C:/Users/malte/DATOS.txt";
+	string filePath = ruta +"/DATOS.txt";
 	string now = getCurrentDateTime("now");
 	ofstream ofs(filePath.c_str(), std::ios_base::out | std::ios_base::app);
-	ofs << now << " DISTANCIA = " << dis  << " ANGULO = "<< angulo << endl;
+	ofs << "OBJETO ENCONTRADO!  " << now << "  DISTANCIA = " << dis  << "  ANGULO = "<< angulo << endl;
 	ofs.close();
 }

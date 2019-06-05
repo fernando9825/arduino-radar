@@ -42,8 +42,8 @@ int main() {
 
 	
 	// connect to arduino
-	//int port = get_int(0, "\n¿Cúal es el puerto en el que está conectado el arduino? ");
-	int port = 9;
+	int port = get_int(0, "\n¿Cúal es el puerto en el que está conectado el arduino? ");
+	//int port = 9;
 
 	std::string portName = "\\.\\COM" + std::to_string(port);
 	const char* nombrepuerto = portName.c_str();
@@ -187,19 +187,27 @@ void display(SerialPort &arduino) {
 
 				if (contador % 2 != 0) {
 					//cout << "GRADOS: " << c << endl;
-					string gra = c;
-					gradosArduino = stoi(gra);
+					try{
+						string gra = c;
+						gradosArduino = stoi(gra);
+					}
+					catch (int param) { cout << "int exception"; }
+					catch (char param) { cout << "char exception"; }
+					catch (...) { cout << "default exception"; }
 				}
 				else {
 					//cout << "DISTANCIA: " << c << endl;
-					string dis = c;
-					distancia = stoi(dis);
+					try
+					{
+						string dis = c;
+						distancia = stoi(dis);
+					}
+					catch (int param) { cout << "int exception"; }
+					catch (char param) { cout << "char exception"; }
+					catch (...) { cout << "default exception"; }
 				}
 			}
 		}
-
-
-		Logger(distancia, gradosArduino);
 
 		cout << "ANGULO = " << gradosArduino << endl;
 		cout << "DISTANCIA = " << distancia << endl;
@@ -232,8 +240,10 @@ void display(SerialPort &arduino) {
 			LineDegrees2d(0, -5.0, 10.0, gradosArduino + 5, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 0.4f });
 		}
 	}
-	else
-	{
+	else{
+
+		Logger(distancia, gradosArduino, "C:/Users/Public/Downloads");
+
 		if (giroCompleto == false) {
 			LineDegrees2d(0, -5.0, 10.0, gradosArduino, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 1.0f });
 			LineDegrees2d(0, -5.0, distancia, gradosArduino, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 0.9f });
@@ -323,34 +333,3 @@ int get_int(int min, std::string prompt)
 		std::cerr << "El valor ingresado debe ser mayor o igual que cero >= " << min << ". Por favor, intente nuevamente.\n";
 	}
 }
-
-
-
-/*// load an image file directly as a new OpenGL texture
-	GLuint tex_2d = SOIL_load_OGL_texture
-	(
-		"resources/textura.jpg",
-		SOIL_LOAD_AUTO,
-		SOIL_CREATE_NEW_ID,
-		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
-	);
-
-	// check for an error during the load process
-	if (0 == tex_2d)
-	{
-		printf("SOIL loading error: '%s'\n", SOIL_last_result());
-	}
-
-	// Frente
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, tex_2d);
-	glBegin(GL_POLYGON);
-
-	glNormal3f(0.0f, 0.0f, 1.0f);
-	glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f, -1.0f, 1.0f);
-	glTexCoord2f(1.0f, 0.0f); glVertex3f(1.0f, -1.0f, 1.0f);
-	glTexCoord2f(1.0f, 1.0f); glVertex3f(1.0f, 1.0f, 1.0f);
-	glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f, 1.0f, 1.0f);
-	glEnd();
-
-	glDisable(GL_TEXTURE_2D);*/
