@@ -30,7 +30,7 @@ int main() {
 	
 	// connect to arduino
 	//int port = get_int(0, "\n¿Cúal es el puerto en el que está conectado el arduino? ");
-	int port = 8;
+	int port = 9;
 
 	std::string portName = "\\.\\COM" + std::to_string(port);
 	const char* nombrepuerto = portName.c_str();
@@ -139,29 +139,46 @@ void display(SerialPort &arduino) {
 	}*/
 
 	int valoresss[2];
-	int contador = 0;
+	long int contador = 0;
+
+	//para los datos
+	long int gradosArduino = 0;
+	long int distancia = 0;
+
 	vector<string> v{ explode(datos, ' ') };
 	for (auto n : v) {
 		vector<string> separado{ explode(n, '.') };
 		for (auto valor : separado) {
-
 			// separacion de las comas
 			vector<string> comas{ explode(valor, ',') };
 			for (auto c : comas) {
 				contador++;
 
 				if (contador % 2 != 0) {
-					cout << "Los grados: " << c << endl;
+					//cout << "GRADOS: " << c << endl;
+					string gra = c;
+					gradosArduino = stoi(gra);
 				}
 				else {
-					cout << "Distancia: " << c << endl;
+					//cout << "DISTANCIA: " << c << endl;
+					string dis = c;
+					distancia = stoi(dis);
 				}
 				
 			}
-			
+
 		}
-		//cout << n << endl;
 	}
+
+	cout << "grados = " << gradosArduino << endl;
+	cout << "distancia = " << distancia << endl;
+
+
+	int x = distancia * cos(gradosArduino);
+	int y = (distancia * sin(gradosArduino)) - 5;
+	solidCircle2d(x, y, 0.5, 10000, 0, 360, new GLfloat[3]{ 1.0f, 0.0f, 0.0f });
+
+	//LineDegrees2d(x, y, 8, 0, new GLfloat[4]{ 1.0f, 0.0f, 0.0f, 1.0});
 
 	
 

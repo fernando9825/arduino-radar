@@ -228,6 +228,7 @@ void solidCircle2d(double posX, double posY, double radius, double amountOfPoint
 		amountOfPoints = 500;
 	}
 
+
 	// fixing Y coordinate
 	posY = fixVerticalPosition(posY);
 
