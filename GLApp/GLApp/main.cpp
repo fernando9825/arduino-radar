@@ -3,11 +3,24 @@
 #include <iostream>
 #include <sstream>
 #include <locale.h>
+#include <cstdio>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "SOIL2/SOIL2.h"
 #include "SerialPort/SerialPort.h"
 #include "GL_DrawingFuncs/GL_DrawingFuncs.h"
+#include <time.h>
+#include "archivo.h"
+
+
+//INTERFAZ GRAFICA CON OPENGL Y C++
+
+/*            UNIVERSIDAD DE EL SALVADOR
+ *            MICROPROGRAMACION - 2019
+ *
+ *            ROBERTO HERBERTH MALTEZ GUARDADO - MG16071
+ *            FERNANDO ROMAN VENTURA ALVADORO  - VA16001
+ *            ROBERTO ANTONIO ORTIZ ACEVEDO    - OA14002 */
 
 using namespace std;
 
@@ -120,6 +133,24 @@ int main() {
 	return EXIT_SUCCESS;
 }
 
+void archivo(int g, int d, string f) {
+
+	string a = "now";
+	string fecha;
+	fecha = getCurrentDateTime(a);
+	cout << fecha;
+	/*freopen("output.txt", "w", stdout);
+	time_t now = time(0);
+	struct tm  tstruct;
+	char  buf[80];
+	tstruct = *localtime(&now);
+	strftime(buf, sizeof(buf), "%Y-%m-%d %X", &tstruct);
+	cout << "FECHA Y HORA: "<< buf << endl;
+	cout << "ANGULO = " << g << endl;
+	cout << "DISTANCIA = " << d << endl; */
+}
+
+
 // ALL DRAWS HERE
 void display(SerialPort &arduino) {
 
@@ -163,15 +194,20 @@ void display(SerialPort &arduino) {
 					//cout << "DISTANCIA: " << c << endl;
 					string dis = c;
 					distancia = stoi(dis);
-				}	
+				}
 			}
 		}
 
-		cout << "grados = " << gradosArduino << endl;
-		cout << "distancia = " << distancia << endl;
+
+		Logger(distancia, gradosArduino);
+
+		cout << "ANGULO = " << gradosArduino << endl;
+		cout << "DISTANCIA = " << distancia << endl;
 
 		int x = distancia * cos(gradosArduino);
 		int y = distancia * sin(gradosArduino);
+
+		//archivo(gradosArduino, distancia);
 	}
 
 	if (distancia > 15) {
@@ -199,7 +235,7 @@ void display(SerialPort &arduino) {
 	else
 	{
 		if (giroCompleto == false) {
-			LineDegrees2d(0, -5.0, distancia, gradosArduino, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 1.0f });
+			LineDegrees2d(0, -5.0, 10.0, gradosArduino, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 1.0f });
 			LineDegrees2d(0, -5.0, distancia, gradosArduino, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 0.9f });
 			LineDegrees2d(0, -5.0, distancia, gradosArduino - 2, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 0.8f });
 			LineDegrees2d(0, -5.0, distancia, gradosArduino - 4, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 0.7f });
@@ -208,7 +244,7 @@ void display(SerialPort &arduino) {
 			LineDegrees2d(0, -5.0, distancia, gradosArduino - 10, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 0.4f });
 		}
 		if (giroCompleto == true) {
-			LineDegrees2d(0, -5.0, distancia, gradosArduino, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 1.0f });
+			LineDegrees2d(0, -5.0, 10.0, gradosArduino, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 1.0f });
 			LineDegrees2d(0, -5.0, distancia, gradosArduino, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 0.9f });
 			LineDegrees2d(0, -5.0, distancia, gradosArduino + 2, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 0.8f });
 			LineDegrees2d(0, -5.0, distancia, gradosArduino + 4, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 0.7f });
@@ -232,7 +268,11 @@ void display(SerialPort &arduino) {
 	// white circle
 	solidCircle2d(0, -5.0, 0.2, 10000, 0, 360, new GLfloat[3]{ 1.0f, 1.0f, 1.0f });
 
-	//LineDegrees2d(0, -5.0, 10.0, grados, new GLfloat[4]{ 1.0f, 1.0f, 1.0f, 1.0f });
+	LineDegrees2d(0, -5.0, 10.0, 0, new GLfloat[4]{ 0.0f, 1.0f, 0.0f, 1.0f });
+	LineDegrees2d(0, -5.0, 10.0, 45, new GLfloat[4]{ 0.0f, 1.0f, 0.0f, 1.0f });
+	LineDegrees2d(0, -5.0, 10.0, 90, new GLfloat[4]{ 0.0f, 1.0f, 0.0f, 1.0f });
+	LineDegrees2d(0, -5.0, 10.0, 135, new GLfloat[4]{ 0.0f, 1.0f, 0.0f, 1.0f });	
+	LineDegrees2d(0, -5.0, 10.0, 180, new GLfloat[4]{ 0.0f, 1.0f, 0.0f, 1.0f });
 
 	if (grados <= 165 && !giroCompleto) {
 		grados++;
@@ -283,6 +323,8 @@ int get_int(int min, std::string prompt)
 		std::cerr << "El valor ingresado debe ser mayor o igual que cero >= " << min << ". Por favor, intente nuevamente.\n";
 	}
 }
+
+
 
 /*// load an image file directly as a new OpenGL texture
 	GLuint tex_2d = SOIL_load_OGL_texture

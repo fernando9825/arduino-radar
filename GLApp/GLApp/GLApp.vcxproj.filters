@@ -32,5 +32,8 @@
     <ClInclude Include="GL_DrawingFuncs\GL_DrawingFuncs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="archivo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

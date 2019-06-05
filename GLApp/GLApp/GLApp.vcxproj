@@ -77,6 +77,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)/../External Libraries/GLEW/include;$(SolutionDir)/../External Libraries/GLFW/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)/../External Libraries/SOIL2/lib;$(SolutionDir)/../External Libraries/GLFW/lib-vc2019;$(SolutionDir)/../External Libraries/GLEW/lib/Release/Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -128,6 +129,7 @@
     <ClCompile Include="SerialPort\SerialPort.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="archivo.h" />
     <ClInclude Include="GL_DrawingFuncs\GL_DrawingFuncs.h" />
     <ClInclude Include="SerialPort\SerialPort.h" />
   </ItemGroup>
